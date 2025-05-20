@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+
   "dependencies": {
+    "bcryptjs": "3.0.2",
     "vite": "6.3.5",
     "vite-tsconfig-paths": "5.1.4",
     "vitest": "3.1.3"

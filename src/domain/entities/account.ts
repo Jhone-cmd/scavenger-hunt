@@ -1,5 +1,6 @@
 import { Entity } from '@/core/entities/entity'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
+import { Optional } from '@/core/types/optional'
 
 export interface AccountProps {
   name: string
@@ -49,8 +50,14 @@ export class Account extends Entity<AccountProps> {
     this.props.updatedAt = new Date()
   }
 
-  static create(props: AccountProps, id?: UniqueEntityId) {
-    const account = new Account(props, id)
+  static create(
+    props: Optional<AccountProps, 'createdAt'>,
+    id?: UniqueEntityId
+  ) {
+    const account = new Account(
+      { ...props, createdAt: props.createdAt ?? new Date() },
+      id
+    )
 
     return account
   }

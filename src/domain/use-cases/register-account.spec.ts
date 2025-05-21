@@ -36,6 +36,6 @@ describe('Register Account', () => {
         email: 'johndoe@email.com',
         password: '123456',
       })
-    ).rejects.toThrow('account already exists')
+    ).rejects.toThrow('Account already exists')
   })
 })

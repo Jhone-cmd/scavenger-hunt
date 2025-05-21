@@ -23,7 +23,7 @@ export class RegisterAccountUseCase {
     const accountWithSameEmail = await this.accountRepository.findByEmail(email)
 
     if (accountWithSameEmail) {
-      throw new Error('account already exists')
+      throw new Error('Account already exists')
     }
 
     const passwordHash = await hash(password, 8)

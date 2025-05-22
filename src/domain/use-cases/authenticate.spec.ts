@@ -12,7 +12,7 @@ describe('Authenticate', () => {
     sut = new AuthenticateUseCase(inMemoryAccountRepository)
   })
 
-  it('should to able authenticate account', async () => {
+  it('should to be able authenticate account', async () => {
     const account = makeAccount({ password: await hash('123456', 8) })
 
     inMemoryAccountRepository.create(account)
@@ -27,7 +27,7 @@ describe('Authenticate', () => {
     })
   })
 
-  it('should not to able authenticate account with password wrong', async () => {
+  it('should not to be able authenticate account with password wrong', async () => {
     const account = makeAccount({ password: await hash('123456', 8) })
 
     inMemoryAccountRepository.create(account)

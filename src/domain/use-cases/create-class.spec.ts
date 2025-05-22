@@ -10,7 +10,7 @@ describe('Create Class', () => {
     sut = new CreateClassUseCase(inMemoryClassRepository)
   })
 
-  it('should to able create class', async () => {
+  it('should to be able create class', async () => {
     await sut.execute({
       name: 'class-1',
       teacher: 'teacher',
@@ -23,7 +23,7 @@ describe('Create Class', () => {
     )
   })
 
-  it('should not to able create class with same name', async () => {
+  it('should not to be able create class with same name', async () => {
     await sut.execute({
       name: 'class-1',
       teacher: 'teacher',

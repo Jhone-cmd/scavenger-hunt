@@ -15,4 +15,12 @@ export class InMemoryItemRepository implements ItemRepository {
 
     return item
   }
+
+  async findById(id: string): Promise<Item | null> {
+    const item = this.items.find(item => item.id.toString() === id)
+
+    if (!item) return null
+
+    return item
+  }
 }

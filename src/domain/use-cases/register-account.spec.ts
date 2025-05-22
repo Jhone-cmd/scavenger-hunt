@@ -10,7 +10,7 @@ describe('Register Account', () => {
     sut = new RegisterAccountUseCase(inMemoryAccountRepository)
   })
 
-  it('should to able register account', async () => {
+  it('should to be able register account', async () => {
     await sut.execute({
       name: 'john doe',
       email: 'johndoe@email.com',
@@ -23,7 +23,7 @@ describe('Register Account', () => {
     )
   })
 
-  it('should not to able register account with same email', async () => {
+  it('should not to be able register account with same email', async () => {
     await sut.execute({
       name: 'john doe',
       email: 'johndoe@email.com',

@@ -10,7 +10,7 @@ describe('Create Item', () => {
     sut = new CreateItemUseCase(inMemoryItemRepository)
   })
 
-  it('should to able create item', async () => {
+  it('should to be able create item', async () => {
     await sut.execute({
       name: 'item-1',
       points: 100,
@@ -22,7 +22,7 @@ describe('Create Item', () => {
     )
   })
 
-  it('should not to able create item with same name', async () => {
+  it('should not to be able create item with same name', async () => {
     await sut.execute({
       name: 'item-1',
       points: 100,

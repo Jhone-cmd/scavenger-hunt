@@ -10,7 +10,7 @@ describe('Create Institution', () => {
     sut = new CreateInstitutionUseCase(inMemoryInstitutionRepository)
   })
 
-  it('should to able create institution', async () => {
+  it('should to be able create institution', async () => {
     await sut.execute({
       name: 'institution-1',
       responsible: 'alone',
@@ -24,7 +24,7 @@ describe('Create Institution', () => {
     )
   })
 
-  it('should not to able create institution with same name', async () => {
+  it('should not to be able create institution with same name', async () => {
     await sut.execute({
       name: 'institution-1',
       responsible: 'alone',

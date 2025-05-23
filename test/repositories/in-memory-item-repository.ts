@@ -1,3 +1,4 @@
+import { PaginationParams } from '@/core/repositories/pagination-params'
 import { Item } from '@/domain/entities/item'
 import { ItemRepository } from '@/domain/repositories/item-repository'
 
@@ -22,5 +23,14 @@ export class InMemoryItemRepository implements ItemRepository {
     if (!item) return null
 
     return item
+  }
+
+  async findManyItems({ page }: PaginationParams): Promise<Item[]> {
+    const perPage = 20
+    const items = this.items
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+      .slice((page - 1) * perPage, page * perPage)
+
+    return items
   }
 }

@@ -41,10 +41,14 @@ export class Point extends Entity<PointProps> {
     this.props.updatedAt = new Date()
   }
 
-  static create(props: Optional<PointProps, 'createdAt'>, id?: UniqueEntityId) {
+  static create(
+    props: Optional<PointProps, 'createdAt' | 'total'>,
+    id?: UniqueEntityId
+  ) {
     const point = new Point(
       {
         ...props,
+        total: props.total ?? 0,
         createdAt: props.createdAt ?? new Date(),
       },
       id

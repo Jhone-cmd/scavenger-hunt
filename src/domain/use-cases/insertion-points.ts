@@ -1,3 +1,4 @@
+import { ResourceNotFound } from '@/core/error/resource-not-found'
 import { Point } from '../entities/point'
 import { ClassRepository } from '../repositories/class-repository'
 import { ItemRepository } from '../repositories/item-repository'
@@ -29,7 +30,7 @@ export class InsertionPointsUseCase {
     const item = await this.itemRepository.findById(itemId)
 
     if (!item || !classe) {
-      throw new Error('Resource not found')
+      throw new ResourceNotFound()
     }
 
     const point = Point.create({

@@ -1,3 +1,4 @@
+import { ResourceAlreadyExists } from '@/core/error/resource-already-exists'
 import { Institution } from '../entities/institution'
 import { InstitutionRepository } from '../repositories/institution-repository'
 
@@ -25,7 +26,7 @@ export class CreateInstitutionUseCase {
       await this.institutionRepository.findByName(name)
 
     if (institutionWithSameName) {
-      throw new Error('Institution already exists')
+      throw new ResourceAlreadyExists()
     }
 
     const institution = Institution.create({

@@ -1,4 +1,5 @@
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
+import { ResourceAlreadyExists } from '@/core/error/resource-already-exists'
 import { Class } from '../entities/class'
 import { ClassRepository } from '../repositories/class-repository'
 
@@ -23,7 +24,7 @@ export class CreateClassUseCase {
     const classWithSameName = await this.classRepository.findByName(name)
 
     if (classWithSameName) {
-      throw new Error('Class already exists')
+      throw new ResourceAlreadyExists()
     }
 
     const classe = Class.create({

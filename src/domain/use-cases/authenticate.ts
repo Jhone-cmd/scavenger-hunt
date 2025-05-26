@@ -1,3 +1,4 @@
+import { InvalidCredentials } from '@/core/error/invalid-credentials'
 import { compare } from 'bcryptjs'
 import { AccountRepository } from '../repositories/account-repository'
 
@@ -20,13 +21,13 @@ export class AuthenticateUseCase {
     const account = await this.accountRepository.findByEmail(email)
 
     if (!account) {
-      throw new Error('Credentials Invalid')
+      throw new InvalidCredentials()
     }
 
     const passwordMatched = await compare(password, account.password)
 
     if (!passwordMatched) {
-      throw new Error('Credentials Invalid')
+      throw new InvalidCredentials()
     }
 
     const accessToken = account.id.toString()

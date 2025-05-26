@@ -1,3 +1,4 @@
+import { ResourceAlreadyExists } from '@/core/error/resource-already-exists'
 import { Item } from '../entities/item'
 import { ItemRepository } from '../repositories/item-repository'
 
@@ -20,7 +21,7 @@ export class CreateItemUseCase {
     const itemWithSameName = await this.itemRepository.findByName(name)
 
     if (itemWithSameName) {
-      throw new Error('Item already exists')
+      throw new ResourceAlreadyExists()
     }
     const item = Item.create({
       name,

@@ -1,3 +1,4 @@
+import { AccountAlreadyExists } from '@/core/error/account-already-exists'
 import { hash } from 'bcryptjs'
 import { Account } from '../entities/account'
 import { AccountRepository } from '../repositories/account-repository'
@@ -23,7 +24,7 @@ export class RegisterAccountUseCase {
     const accountWithSameEmail = await this.accountRepository.findByEmail(email)
 
     if (accountWithSameEmail) {
-      throw new Error('Account already exists')
+      throw new AccountAlreadyExists()
     }
 
     const passwordHash = await hash(password, 8)

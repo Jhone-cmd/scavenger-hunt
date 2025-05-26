@@ -1014,3 +1014,8 @@ why-is-node-running@^2.3.0:
   dependencies:
     siginfo "^2.0.0"
     stackback "0.0.2"
+
+zod@3.25.29:
+  version "3.25.29"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.25.29.tgz#4f0f3e01322b178942905764856e3b4969299d09"
+  integrity sha512-xetH/muIYuAyN7YJGKh99jkBQq/XbGEyTkv7JC4YYsWppHmfoU1MDoQa441WD1QMDaeCaEBO0e0hl1iSmluNQQ==

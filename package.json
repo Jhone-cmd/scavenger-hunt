@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "tsx watch ./src/server.ts",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:e2e": "vitest run --config ./vitest.config.e2e.ts",
+    "test:e2e:watch": "vitest --config ./vitest.config.e2e.ts"
   },
   "dependencies": {
     "@prisma/client": "6.8.2",

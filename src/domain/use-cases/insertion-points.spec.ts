@@ -1,4 +1,5 @@
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
+import { ResourceNotFound } from '@/core/error/resource-not-found'
 import { makeClass } from '../../../test/factories/make-class'
 import { makeItem } from '../../../test/factories/make-item'
 import { InMemoryClassRepository } from '../../../test/repositories/in-memory-class-repository'
@@ -13,8 +14,10 @@ let sut: InsertionPointsUseCase
 
 describe('Insertion Point', () => {
   beforeEach(() => {
-    inMemoryPointRepository = new InMemoryPointRepository()
     inMemoryClassRepository = new InMemoryClassRepository()
+    inMemoryPointRepository = new InMemoryPointRepository(
+      inMemoryClassRepository
+    )
     inMemoryItemRepository = new InMemoryItemRepository()
     sut = new InsertionPointsUseCase(
       inMemoryPointRepository,
@@ -56,6 +59,6 @@ describe('Insertion Point', () => {
         itemId: '',
         amount: 2,
       })
-    ).rejects.toThrow('Resource not found')
+    ).rejects.toBeInstanceOf(ResourceNotFound)
   })
 })

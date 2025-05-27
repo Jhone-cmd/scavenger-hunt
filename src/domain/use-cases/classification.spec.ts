@@ -1,4 +1,5 @@
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
+import { makeClass } from '../../../test/factories/make-class'
 import { makePoint } from '../../../test/factories/make-point'
 import { InMemoryClassRepository } from '../../../test/repositories/in-memory-class-repository'
 import { InMemoryItemRepository } from '../../../test/repositories/in-memory-item-repository'
@@ -21,11 +22,15 @@ describe('Classification', () => {
   })
 
   it('should be able to view a rating', async () => {
+    const classe = makeClass({ name: 'alone' }, new UniqueEntityId('class-1'))
+    inMemoryClassRepository.create(classe)
+
+    const classId = classe.id
     inMemoryPointRepository.create(
       makePoint(
         {
           itemId: new UniqueEntityId('item-1'),
-          classId: new UniqueEntityId('class-1'),
+          classId,
           total: 150,
         },
         new UniqueEntityId('point-1')
@@ -36,59 +41,17 @@ describe('Classification', () => {
       makePoint(
         {
           itemId: new UniqueEntityId('item-2'),
-          classId: new UniqueEntityId('class-1'),
+          classId,
           total: 200,
         },
         new UniqueEntityId('point-2')
-      )
-    )
-
-    inMemoryPointRepository.create(
-      makePoint(
-        {
-          itemId: new UniqueEntityId('item-1'),
-          classId: new UniqueEntityId('class-1'),
-          total: 150,
-        },
-        new UniqueEntityId('point-1')
-      )
-    )
-
-    inMemoryPointRepository.create(
-      makePoint(
-        {
-          itemId: new UniqueEntityId('item-2'),
-          classId: new UniqueEntityId('class-1'),
-          total: 200,
-        },
-        new UniqueEntityId('point-2')
-      )
-    )
-
-    inMemoryPointRepository.create(
-      makePoint(
-        {
-          itemId: new UniqueEntityId('item-3'),
-          classId: new UniqueEntityId('class-2'),
-          total: 150,
-        },
-        new UniqueEntityId('point-3')
-      )
-    )
-
-    inMemoryPointRepository.create(
-      makePoint(
-        {
-          itemId: new UniqueEntityId('item-4'),
-          classId: new UniqueEntityId('class-2'),
-          total: 200,
-        },
-        new UniqueEntityId('point-4')
       )
     )
 
     const result = await sut.execute()
 
-    console.log(result)
+    expect(result.classification).toEqual([
+      expect.objectContaining({ totalPoints: 350 }),
+    ])
   })
 })

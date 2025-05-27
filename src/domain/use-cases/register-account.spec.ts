@@ -1,3 +1,4 @@
+import { AccountAlreadyExists } from '@/core/error/account-already-exists'
 import { InMemoryAccountRepository } from '../../../test/repositories/in-memory-account-repository'
 import { RegisterAccountUseCase } from './register-account'
 
@@ -36,6 +37,6 @@ describe('Register Account', () => {
         email: 'johndoe@email.com',
         password: '123456',
       })
-    ).rejects.toThrow('Account already exists')
+    ).rejects.toBeInstanceOf(AccountAlreadyExists)
   })
 })

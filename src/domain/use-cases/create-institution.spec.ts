@@ -1,3 +1,4 @@
+import { ResourceAlreadyExists } from '@/core/error/resource-already-exists'
 import { InMemoryInstitutionRepository } from '../../../test/repositories/in-memory-institution-repository'
 import { CreateInstitutionUseCase } from './create-institution'
 
@@ -39,6 +40,6 @@ describe('Create Institution', () => {
         address: 'Street Nothing',
         phone: '+65 8888-7777',
       })
-    ).rejects.toThrow('Institution already exists')
+    ).rejects.toBeInstanceOf(ResourceAlreadyExists)
   })
 })

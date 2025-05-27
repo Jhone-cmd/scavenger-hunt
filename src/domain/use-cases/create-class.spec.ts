@@ -1,3 +1,4 @@
+import { ResourceAlreadyExists } from '@/core/error/resource-already-exists'
 import { InMemoryClassRepository } from '../../../test/repositories/in-memory-class-repository'
 import { CreateClassUseCase } from './create-class'
 
@@ -36,6 +37,6 @@ describe('Create Class', () => {
         teacher: 'teacher',
         institutionId: 'institution-1',
       })
-    ).rejects.toThrow('Class already exists')
+    ).rejects.toBeInstanceOf(ResourceAlreadyExists)
   })
 })

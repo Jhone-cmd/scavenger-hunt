@@ -1,3 +1,4 @@
+import { InvalidCredentials } from '@/core/error/invalid-credentials'
 import { hash } from 'bcryptjs'
 import { makeAccount } from '../../../test/factories/make-account'
 import { InMemoryAccountRepository } from '../../../test/repositories/in-memory-account-repository'
@@ -37,6 +38,6 @@ describe('Authenticate', () => {
         email: 'johndoe@email.com',
         password: '1234567',
       })
-    ).rejects.toThrow('Credentials Invalid')
+    ).rejects.toBeInstanceOf(InvalidCredentials)
   })
 })

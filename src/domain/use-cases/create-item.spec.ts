@@ -1,3 +1,4 @@
+import { ResourceAlreadyExists } from '@/core/error/resource-already-exists'
 import { InMemoryItemRepository } from '../../../test/repositories/in-memory-item-repository'
 import { CreateItemUseCase } from './create-item'
 
@@ -32,6 +33,6 @@ describe('Create Item', () => {
         name: 'item-1',
         points: 100,
       })
-    ).rejects.toThrow('Item already exists')
+    ).rejects.toBeInstanceOf(ResourceAlreadyExists)
   })
 })

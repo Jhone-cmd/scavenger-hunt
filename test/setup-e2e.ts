@@ -1,3 +1,4 @@
+import { app } from '@/app'
 import { prisma } from '@/infra/lib/prisma'
 import { execSync } from 'node:child_process'
 import { randomUUID } from 'node:crypto'
@@ -21,9 +22,13 @@ beforeAll(async () => {
   process.env.DATABASE_URL = databaseUrl
 
   execSync('yarn prisma migrate deploy')
+
+  await app.ready()
 })
 
 afterAll(async () => {
   await prisma.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schemaId}" CASCADE`)
   await prisma.$disconnect()
+
+  await app.close()
 })

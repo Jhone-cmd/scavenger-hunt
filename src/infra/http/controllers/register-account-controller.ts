@@ -1,7 +1,7 @@
 import { AccountAlreadyExists } from '@/core/error/account-already-exists'
+import { makeRegisterAccountUseCase } from '@/infra/factories/make-register-account-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
-import { makeRegisterAccountUseCase } from '../factories/make-register-account-use-case'
 
 export async function registerAccountController(
   request: FastifyRequest,

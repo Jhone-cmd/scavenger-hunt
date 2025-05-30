@@ -1,5 +1,6 @@
 import { app } from '@/app'
 import request from 'supertest'
+import { createAccountAndAuthenticate } from '../../../../test/utils/create-account-and-authenticate'
 
 describe('Create Institution (e2e)', () => {
   beforeAll(async () => {
@@ -11,18 +12,7 @@ describe('Create Institution (e2e)', () => {
   })
 
   test('[POST] should be able to create institution', async () => {
-    await request(app.server).post('/accounts').send({
-      name: 'john doe',
-      email: 'johndoe@email.com',
-      password: '123456789',
-    })
-
-    const response = await request(app.server).post('/sessions').send({
-      email: 'johndoe@email.com',
-      password: '123456789',
-    })
-
-    const token = response.body.access_token
+    const { token } = await createAccountAndAuthenticate(app)
 
     const result = await request(app.server)
       .post('/institutions')

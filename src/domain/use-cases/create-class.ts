@@ -19,6 +19,7 @@ export class CreateClassUseCase {
   async execute({
     name,
     teacher,
+    institutionId,
   }: CreateClassUseCaseRequest): Promise<CreateClassUseCaseResponse> {
     const classWithSameName = await this.classRepository.findByName(name)
 
@@ -29,7 +30,7 @@ export class CreateClassUseCase {
     const classe = Class.create({
       name,
       teacher,
-      institutionId: new UniqueEntityId(),
+      institutionId: new UniqueEntityId(institutionId),
     })
 
     await this.classRepository.create(classe)

@@ -21,6 +21,7 @@ export class PrismaInstitutionMapper {
     institution: Institution
   ): Prisma.InstitutionsUncheckedCreateInput {
     return {
+      id: institution.id.toString(),
       name: institution.name,
       responsible: institution.responsible,
       address: institution.address,

@@ -18,10 +18,11 @@ export class PrismaClassMapper {
 
   static toPrisma(classe: Class): Prisma.ClassesUncheckedCreateInput {
     return {
+      id: classe.id.toString(),
       name: classe.name,
       teacher: classe.teacher,
-      createdAt: classe.createdAt,
       institutionId: classe.institutionId.toString(),
+      createdAt: classe.createdAt,
       updatedAt: classe.updatedAt,
     }
   }

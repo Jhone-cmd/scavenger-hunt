@@ -25,13 +25,27 @@ model Accounts {
 }
 
 model Institutions {
-  id          String   @id @default(uuid())
-  name        String   @unique
+  id          String    @id @default(uuid())
+  name        String    @unique
   responsible String
   address     String
   phone       String
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  classes     Classes[]
 
   @@map("institutions")
+}
+
+model Classes {
+  id            String   @id @default(uuid())
+  institutionId String   @map("institution_id")
+  name          String   @unique
+  teacher       String
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  institution Institutions @relation(fields: [institutionId], references: [id])
+
+  @@map("classes")
 }

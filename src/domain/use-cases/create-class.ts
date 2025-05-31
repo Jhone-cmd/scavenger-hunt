@@ -19,7 +19,6 @@ export class CreateClassUseCase {
   async execute({
     name,
     teacher,
-    institutionId,
   }: CreateClassUseCaseRequest): Promise<CreateClassUseCaseResponse> {
     const classWithSameName = await this.classRepository.findByName(name)
 

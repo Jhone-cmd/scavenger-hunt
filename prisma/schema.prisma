@@ -49,3 +49,13 @@ model Classes {
 
   @@map("classes")
 }
+
+model Items {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  points    Int
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("items")
+}

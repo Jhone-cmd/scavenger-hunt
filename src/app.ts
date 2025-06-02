@@ -4,6 +4,7 @@ import fastify from 'fastify'
 import { errorHandler } from './error-handler'
 import { env } from './infra/env/schema'
 import { accountRoutes } from './infra/http/routes/account-routes'
+import { classRoutes } from './infra/http/routes/class-routes'
 import { institutionRoutes } from './infra/http/routes/institution-routes'
 import { itemRoutes } from './infra/http/routes/item-routes'
 
@@ -19,6 +20,7 @@ app.register(jwt, {
 
 app.register(accountRoutes)
 app.register(institutionRoutes)
+app.register(classRoutes)
 app.register(itemRoutes)
 
 app.setErrorHandler(errorHandler)

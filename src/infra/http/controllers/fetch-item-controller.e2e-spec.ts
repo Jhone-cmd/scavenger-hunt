@@ -1,7 +1,6 @@
 import { app } from '@/app'
 import { prisma } from '@/infra/lib/prisma'
 import request from 'supertest'
-import { createAccountAndAuthenticate } from '../../../../test/utils/create-account-and-authenticate'
 
 describe('Fetch Item (e2e)', () => {
   beforeAll(async () => {
@@ -12,10 +11,8 @@ describe('Fetch Item (e2e)', () => {
     await app.close()
   })
 
-  test('[POST] should be able to fetch items', async () => {
-    const { token } = await createAccountAndAuthenticate(app)
-
-    const items = await prisma.items.createMany({
+  test('[GET] should be able to fetch items', async () => {
+    await prisma.items.createMany({
       data: [
         { name: 'item-1', points: 100 },
         { name: 'item-2', points: 200 },

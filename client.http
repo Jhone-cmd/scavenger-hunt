@@ -8,3 +8,8 @@ content-type: application/json
     "email": "johndoe@email.com",
     "password": "123456789"
 }
+
+###
+
+GET {{baseUrl}}/classification
+content-type: application/json

@@ -10,6 +10,7 @@ export class PrismaPointRepository implements PointRepository {
       data,
     })
   }
+
   async classification(): Promise<
     { className: string; totalPoints: number }[]
   > {

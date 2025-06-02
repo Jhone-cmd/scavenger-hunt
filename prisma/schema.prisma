@@ -46,16 +46,35 @@ model Classes {
   updatedAt     DateTime @updatedAt @map("updated_at")
 
   institution Institutions @relation(fields: [institutionId], references: [id])
+  points      Points[]
 
   @@map("classes")
 }
 
 model Items {
-  id        String   @id @default(uuid())
-  name      String   @unique
-  points    Int
+  id         String   @id @default(uuid())
+  name       String   @unique
+  points     Int
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  pointsItem Points[]
+
+  @@map("items")
+}
+
+model Points {
+  id      String @id @default(uuid())
+  classId String @map("class_id")
+  itemId  String @map("item_id")
+
+  amount Int
+  total  Int
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@map("items")
+  class Classes @relation(fields: [classId], references: [id])
+  item  Items   @relation(fields: [itemId], references: [id])
+
+  @@map("points")
 }

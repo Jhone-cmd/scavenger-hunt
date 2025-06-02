@@ -20,6 +20,15 @@ export class Point extends Entity<PointProps> {
     return this.props.classId
   }
 
+  get amount() {
+    return this.props.amount
+  }
+
+  set amount(amount: number) {
+    this.props.amount = amount
+    this.touch()
+  }
+
   get total() {
     return this.props.total
   }

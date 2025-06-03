@@ -1,3 +1,4 @@
+import { PaginationParams } from '@/core/repositories/pagination-params'
 import { Point } from '../entities/point'
 
 export abstract class PointRepository {
@@ -5,4 +6,5 @@ export abstract class PointRepository {
   abstract classification(): Promise<
     { classeName: string; totalPoints: number }[]
   >
+  abstract findManyPoints(params: PaginationParams): Promise<Point[]>
 }

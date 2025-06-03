@@ -1,3 +1,4 @@
+import { PaginationParams } from '@/core/repositories/pagination-params'
 import { Class } from '@/domain/entities/class'
 import { ClassRepository } from '@/domain/repositories/class-repository'
 
@@ -22,5 +23,14 @@ export class InMemoryClassRepository implements ClassRepository {
     if (!classe) return null
 
     return classe
+  }
+
+  async findManyClasses({ page }: PaginationParams): Promise<Class[]> {
+    const perPage = 20
+    const classes = this.items
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+      .slice((page - 1) * perPage, page * perPage)
+
+    return classes
   }
 }

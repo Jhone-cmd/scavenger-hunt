@@ -1,3 +1,4 @@
+import { PaginationParams } from '@/core/repositories/pagination-params'
 import { Institution } from '@/domain/entities/institution'
 import { InstitutionRepository } from '@/domain/repositories/institution-repository'
 
@@ -14,5 +15,16 @@ export class InMemoryInstitutionRepository implements InstitutionRepository {
     if (!institution) return null
 
     return institution
+  }
+
+  async findManyInstitutions({
+    page,
+  }: PaginationParams): Promise<Institution[]> {
+    const perPage = 20
+    const institutions = this.items
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+      .slice((page - 1) * perPage, page * perPage)
+
+    return institutions
   }
 }

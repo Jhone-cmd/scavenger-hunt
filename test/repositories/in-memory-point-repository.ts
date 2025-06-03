@@ -1,3 +1,4 @@
+import { PaginationParams } from '@/core/repositories/pagination-params'
 import { Point } from '@/domain/entities/point'
 import { PointRepository } from '@/domain/repositories/point-repository'
 import { InMemoryClassRepository } from './in-memory-class-repository'
@@ -39,5 +40,14 @@ export class InMemoryPointRepository implements PointRepository {
       .slice(0, 20)
 
     return classification
+  }
+
+  async findManyPoints({ page }: PaginationParams): Promise<Point[]> {
+    const perPage = 20
+    const points = this.items
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+      .slice((page - 1) * perPage, page * perPage)
+
+    return points
   }
 }

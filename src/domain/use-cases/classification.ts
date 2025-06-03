@@ -1,7 +1,7 @@
 import { PointRepository } from '../repositories/point-repository'
 
 export interface ClassificationUseCaseResponse {
-  classification: { className: string; totalPoints: number }[]
+  classification: { classeName: string; totalPoints: number }[]
 }
 
 export class ClassificationUseCase {

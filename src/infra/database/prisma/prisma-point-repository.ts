@@ -12,7 +12,7 @@ export class PrismaPointRepository implements PointRepository {
   }
 
   async classification(): Promise<
-    { className: string; totalPoints: number }[]
+    { classeName: string; totalPoints: number }[]
   > {
     const aggregatedPoints = await prisma.points.groupBy({
       by: ['classId'],
@@ -39,14 +39,14 @@ export class PrismaPointRepository implements PointRepository {
       },
     })
 
-    const classNamesMap: Record<string, string> = {}
+    const classeNamesMap: Record<string, string> = {}
 
     classes.forEach(classe => {
-      classNamesMap[classe.id] = classe.name
+      classeNamesMap[classe.id] = classe.name
     })
 
     const classification = aggregatedPoints.map(entry => ({
-      className: classNamesMap[entry.classId] || 'unknown',
+      classeName: classeNamesMap[entry.classId] || 'unknown',
       totalPoints: entry._sum.total || 0,
     }))
 

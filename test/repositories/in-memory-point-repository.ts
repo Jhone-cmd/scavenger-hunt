@@ -12,13 +12,13 @@ export class InMemoryPointRepository implements PointRepository {
   }
 
   async classification(): Promise<
-    { className: string; totalPoints: number }[]
+    { classeName: string; totalPoints: number }[]
   > {
-    const classNames: { [key: string]: string } = {}
+    const classeNames: { [key: string]: string } = {}
 
     this.classRepository.items.forEach(item => {
-      if (!classNames[item.id.toString()]) {
-        classNames[item.id.toString()] = item.name
+      if (!classeNames[item.id.toString()]) {
+        classeNames[item.id.toString()] = item.name
       }
     })
 
@@ -32,7 +32,7 @@ export class InMemoryPointRepository implements PointRepository {
 
     const classification = Array.from(classMap.entries())
       .map(([classId, totalPoints]) => ({
-        className: classNames[classId],
+        classeName: classeNames[classId],
         totalPoints,
       }))
       .sort((a, b) => b.totalPoints - a.totalPoints)

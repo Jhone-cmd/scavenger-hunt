@@ -1,3 +1,4 @@
+import { PaginationParams } from '@/core/repositories/pagination-params'
 import { Class } from '@/domain/entities/class'
 import { ClassRepository } from '@/domain/repositories/class-repository'
 import { prisma } from '@/infra/lib/prisma'
@@ -34,5 +35,16 @@ export class PrismaClassRepository implements ClassRepository {
     if (!classe) return null
 
     return PrismaClassMapper.toDomain(classe)
+  }
+
+  async findManyClasses({ page }: PaginationParams): Promise<Class[]> {
+    const perPage = 20
+
+    const classes = await prisma.classes.findMany({
+      skip: (page - 1) * perPage,
+      take: perPage,
+    })
+
+    return classes.map(PrismaClassMapper.toDomain)
   }
 }

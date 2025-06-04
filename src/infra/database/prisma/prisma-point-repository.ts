@@ -1,3 +1,4 @@
+import { PaginationParams } from '@/core/repositories/pagination-params'
 import { Point } from '@/domain/entities/point'
 import { PointRepository } from '@/domain/repositories/point-repository'
 import { prisma } from '@/infra/lib/prisma'
@@ -51,5 +52,15 @@ export class PrismaPointRepository implements PointRepository {
     }))
 
     return classification
+  }
+
+  async findManyPoints({ page }: PaginationParams): Promise<Point[]> {
+    const perPage = 20
+    const points = await prisma.points.findMany({
+      skip: (page - 1) * perPage,
+      take: perPage,
+    })
+
+    return points.map(PrismaPointMapper.toDomain)
   }
 }

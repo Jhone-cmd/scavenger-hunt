@@ -1,3 +1,4 @@
+import { PaginationParams } from '@/core/repositories/pagination-params'
 import { Institution } from '@/domain/entities/institution'
 import { InstitutionRepository } from '@/domain/repositories/institution-repository'
 import { prisma } from '@/infra/lib/prisma'
@@ -19,5 +20,17 @@ export class PrismaInstitutionRepository implements InstitutionRepository {
     if (!institution) return null
 
     return PrismaInstitutionMapper.toDomain(institution)
+  }
+
+  async findManyInstitutions({
+    page,
+  }: PaginationParams): Promise<Institution[]> {
+    const perPage = 20
+    const institutions = await prisma.institutions.findMany({
+      skip: (page - 1) * perPage,
+      take: perPage,
+    })
+
+    return institutions.map(PrismaInstitutionMapper.toDomain)
   }
 }

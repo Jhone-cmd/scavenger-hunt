@@ -37,10 +37,16 @@ export class PrismaClassRepository implements ClassRepository {
     return PrismaClassMapper.toDomain(classe)
   }
 
-  async findManyClasses({ page }: PaginationParams): Promise<Class[]> {
+  async findManyClasses(
+    institutionId: string,
+    { page }: PaginationParams
+  ): Promise<Class[]> {
     const perPage = 20
 
     const classes = await prisma.classes.findMany({
+      where: {
+        institutionId,
+      },
       skip: (page - 1) * perPage,
       take: perPage,
     })

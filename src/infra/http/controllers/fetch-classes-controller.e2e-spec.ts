@@ -22,7 +22,9 @@ describe('Fetch Classe (e2e)', () => {
       ],
     })
 
-    const result = await request(app.server).get('/classes').send()
+    const result = await request(app.server)
+      .get(`/institutions/${institutionId}/classes`)
+      .send()
 
     expect(result.statusCode).toEqual(200)
     expect(result.body).toEqual({

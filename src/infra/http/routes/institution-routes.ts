@@ -1,6 +1,7 @@
 import { FastifyInstance } from 'fastify'
 import { createClassController } from '../controllers/create-class-controller'
 import { createInstitutionController } from '../controllers/create-institution-controller'
+import { fetchInstitutionsController } from '../controllers/fetch-institutions-controller'
 import { verifyJWT } from '../middlewares/verify-jwt'
 
 export async function institutionRoutes(app: FastifyInstance) {
@@ -14,4 +15,6 @@ export async function institutionRoutes(app: FastifyInstance) {
     { onRequest: [verifyJWT] },
     createClassController
   )
+
+  app.get('/institutions', fetchInstitutionsController)
 }

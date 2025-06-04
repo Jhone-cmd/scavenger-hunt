@@ -10,10 +10,12 @@ export async function createInstitutionClassItem() {
     },
   })
 
+  const institutionId = institution.id
+
   const classe = await prisma.classes.create({
     data: {
       name: '1º C',
-      institutionId: institution.id,
+      institutionId,
       teacher: 'teacher-1',
     },
   })
@@ -29,5 +31,5 @@ export async function createInstitutionClassItem() {
 
   const itemId = item.id
 
-  return { classId, itemId }
+  return { institutionId, classId, itemId }
 }

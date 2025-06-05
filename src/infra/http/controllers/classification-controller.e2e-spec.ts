@@ -28,8 +28,7 @@ describe('Classification (e2e)', () => {
     expect(result.statusCode).toEqual(200)
     expect(result.body).toEqual({
       classification: expect.arrayContaining([
-        expect.objectContaining({ classeName: '1º C' }),
-        expect.objectContaining({ totalPoints: 750 }),
+        expect.objectContaining({ name: '1º C', total: 750 }),
       ]),
     })
   })

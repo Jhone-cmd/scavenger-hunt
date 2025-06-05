@@ -2,7 +2,7 @@ import cors from '@fastify/cors'
 import jwt from '@fastify/jwt'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUi from '@fastify/swagger-ui'
-import fastify from 'fastify'
+import fastify, { FastifyReply } from 'fastify'
 import {
   jsonSchemaTransform,
   serializerCompiler,
@@ -34,7 +34,7 @@ app.register(fastifySwagger, {
     info: {
       title: 'API do Scavenger-Hunt',
       description:
-        'Documentação da api scavenger-hunt utilizando o fastify que serve para auxiliar as gincanas de festa junina das instituições escolares.',
+        'Documentação da api scavenger-hunt utilizando o framework fastify, ela serve para auxiliar as gincanas de festas juninas das instituições escolares.',
       version: '1.0.0',
     },
     components: {
@@ -61,6 +61,10 @@ app.register(fastifySwaggerUi, {
       return 0 // as outras tags ficarão na ordem padrão
     },
   },
+})
+
+app.get('/', async (_, reply: FastifyReply) => {
+  reply.redirect('/docs')
 })
 
 app.register(accountRoutes)

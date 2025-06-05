@@ -1,15 +1,16 @@
 # Dependencies
 node_modules
 
-
 # Folders
-
 .vscode
+
 
 # Environment
 .env
 /src/generated/prisma
 
 # Data
-
 data
+
+# Build
+dist

@@ -3,8 +3,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "engines": {
+    "node": ">= 22"
+  },
   "scripts": {
     "dev": "tsx watch ./src/server.ts",
+    "build": "tsup src --out-dir dist",
+    "start": "node ./dist/server.js",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "vitest run --config ./vitest.config.e2e.ts",
@@ -32,6 +37,8 @@
     "dotenv": "16.5.0",
     "prisma": "6.9.0",
     "supertest": "7.1.1",
-    "tsx": "4.19.4"
+    "tsup": "8.5.0",
+    "tsx": "4.19.4",
+    "typescript": "5.8.3"
   }
 }

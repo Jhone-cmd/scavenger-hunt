@@ -2,6 +2,7 @@ import { ResourceNotFound } from '@/core/error/resource-not-found'
 import { makeFetchPointsUseCase } from '@/infra/factories/make-fetch-points-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
+import { PointPresenter } from '../presenters/point-presenter'
 
 export async function fetchPointsController(
   request: FastifyRequest,
@@ -17,7 +18,7 @@ export async function fetchPointsController(
     const fetchPointsUseCase = makeFetchPointsUseCase()
     const { points } = await fetchPointsUseCase.execute({ page })
 
-    return reply.status(200).send({ points })
+    return reply.status(200).send({ points: points.map(PointPresenter.toHttp) })
   } catch (error) {
     if (error instanceof ResourceNotFound) {
       return reply.status(400).send({ error: error.message })

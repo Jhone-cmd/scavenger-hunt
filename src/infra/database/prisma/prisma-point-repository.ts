@@ -59,6 +59,18 @@ export class PrismaPointRepository implements PointRepository {
     const points = await prisma.points.findMany({
       skip: (page - 1) * perPage,
       take: perPage,
+      include: {
+        classe: {
+          select: {
+            name: true,
+          },
+        },
+        item: {
+          select: {
+            name: true,
+          },
+        },
+      },
     })
 
     return points.map(PrismaPointMapper.toDomain)

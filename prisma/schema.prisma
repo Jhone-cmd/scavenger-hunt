@@ -73,8 +73,8 @@ model Points {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  class Classes @relation(fields: [classId], references: [id])
-  item  Items   @relation(fields: [itemId], references: [id])
+  classe Classes @relation(fields: [classId], references: [id])
+  item   Items   @relation(fields: [itemId], references: [id])
 
   @@map("points")
 }

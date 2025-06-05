@@ -3,8 +3,10 @@ import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optional'
 
 export interface PointProps {
-  itemId: UniqueEntityId
   classId: UniqueEntityId
+  itemId: UniqueEntityId
+  classeName?: string | null
+  itemName?: string | null
   amount: number
   total: number
   createdAt: Date
@@ -12,12 +14,20 @@ export interface PointProps {
 }
 
 export class Point extends Entity<PointProps> {
+  get classId() {
+    return this.props.classId
+  }
+
   get itemId() {
     return this.props.itemId
   }
 
-  get classId() {
-    return this.props.classId
+  get classeName() {
+    return this.props.classeName
+  }
+
+  get itemName() {
+    return this.props.itemName
   }
 
   get amount() {

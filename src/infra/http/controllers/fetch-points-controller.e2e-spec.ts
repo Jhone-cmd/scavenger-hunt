@@ -33,15 +33,9 @@ describe('Fetch Point (e2e)', () => {
     expect(result.statusCode).toEqual(200)
     expect(result.body).toEqual({
       points: expect.arrayContaining([
-        expect.objectContaining({
-          props: expect.objectContaining({ total: 150 }),
-        }),
-        expect.objectContaining({
-          props: expect.objectContaining({ total: 300 }),
-        }),
-        expect.objectContaining({
-          props: expect.objectContaining({ total: 450 }),
-        }),
+        expect.objectContaining({ classe: '1º C', total: 150 }),
+        expect.objectContaining({ classe: '1º C', total: 300 }),
+        expect.objectContaining({ classe: '1º C', total: 450 }),
       ]),
     })
   })

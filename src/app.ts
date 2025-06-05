@@ -37,6 +37,15 @@ app.register(fastifySwagger, {
         'Documentação da api scavenger-hunt utilizando o fastify que serve para auxiliar as gincanas de festa junina das instituições escolares.',
       version: '1.0.0',
     },
+    components: {
+      securitySchemes: {
+        authorization: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
   },
 
   transform: jsonSchemaTransform,
@@ -44,6 +53,14 @@ app.register(fastifySwagger, {
 
 app.register(fastifySwaggerUi, {
   routePrefix: '/docs',
+  uiConfig: {
+    // Ordena as tags manualmente, colocando 'Classification' primeiro
+    tagsSorter: (a, b) => {
+      if (a === 'Classification') return -1
+      if (b === 'Classification') return 1
+      return 0 // as outras tags ficarão na ordem padrão
+    },
+  },
 })
 
 app.register(accountRoutes)

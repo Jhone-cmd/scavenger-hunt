@@ -1,4 +1,6 @@
 import { FastifyInstance } from 'fastify'
+import { ZodTypeProvider } from 'fastify-type-provider-zod'
+import z from 'zod'
 import { createClassController } from '../controllers/create-class-controller'
 import { createInstitutionController } from '../controllers/create-institution-controller'
 import { fetchInstitutionsController } from '../controllers/fetch-institutions-controller'
@@ -6,21 +8,98 @@ import { fetchSpecificClassesController } from '../controllers/fetch-specific-cl
 import { verifyJWT } from '../middlewares/verify-jwt'
 
 export async function institutionRoutes(app: FastifyInstance) {
-  app.post(
+  app.withTypeProvider<ZodTypeProvider>().post(
     '/institutions',
-    { onRequest: [verifyJWT] },
+    {
+      onRequest: [verifyJWT],
+      schema: {
+        tags: ['Institutions'],
+        security: [{ authorization: [] }],
+        body: z.object({
+          name: z.string(),
+          responsible: z.string(),
+          address: z.string(),
+          phone: z.string(),
+        }),
+        response: {
+          201: z.null(),
+        },
+      },
+    },
     createInstitutionController
   )
-  app.post(
+  app.withTypeProvider<ZodTypeProvider>().post(
     '/institutions/:institutionId/classes',
-    { onRequest: [verifyJWT] },
+    {
+      onRequest: [verifyJWT],
+      schema: {
+        tags: ['Classes'],
+        security: [{ authorization: [] }],
+        params: z.object({
+          institutionId: z.string().uuid(),
+        }),
+        body: z.object({
+          name: z.string(),
+          teacher: z.string(),
+        }),
+        response: {
+          201: z.null(),
+        },
+      },
+    },
     createClassController
   )
 
-  app.get('/institutions', fetchInstitutionsController)
+  app.withTypeProvider<ZodTypeProvider>().get(
+    '/institutions',
+    {
+      schema: {
+        tags: ['Institutions'],
+        querystring: z.object({
+          page: z.coerce.number().default(1),
+        }),
+        response: {
+          200: z.object({
+            institutions: z.array(
+              z.object({
+                id: z.string().uuid(),
+                name: z.string(),
+                address: z.string(),
+                phone: z.string(),
+              })
+            ),
+          }),
+        },
+      },
+    },
+    fetchInstitutionsController
+  )
 
-  app.get(
+  app.withTypeProvider<ZodTypeProvider>().get(
     '/institutions/:institutionId/classes',
+    {
+      schema: {
+        tags: ['Classes'],
+        querystring: z.object({
+          page: z.coerce.number().default(1),
+        }),
+        params: z.object({
+          institutionId: z.string().uuid(),
+        }),
+        response: {
+          200: z.object({
+            classes: z.array(
+              z.object({
+                id: z.string().uuid(),
+                institution: z.string().nullish(),
+                name: z.string(),
+                teacher: z.string(),
+              })
+            ),
+          }),
+        },
+      },
+    },
     fetchSpecificClassesController
   )
 }

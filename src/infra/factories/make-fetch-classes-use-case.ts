@@ -1,4 +1,4 @@
-import { FetchClassesUseCase } from '@/domain/use-cases/fetch-specific-classes'
+import { FetchClassesUseCase } from '@/domain/use-cases/fetch-classes'
 import { PrismaClassRepository } from '../database/prisma/prisma-class-repository'
 
 export function makeFetchClassesUseCase() {

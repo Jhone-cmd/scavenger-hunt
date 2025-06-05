@@ -8,20 +8,15 @@ export async function fetchClassesController(
   request: FastifyRequest,
   reply: FastifyReply
 ) {
-  const fetchClasseParamSchema = z.object({
-    institutionId: z.string().uuid(),
-  })
-  const fetchClasseQuerySchema = z.object({
+  const fetchClassesQuerySchema = z.object({
     page: z.coerce.number().default(1),
   })
 
-  const { institutionId } = fetchClasseParamSchema.parse(request.params)
-  const { page } = fetchClasseQuerySchema.parse(request.query)
+  const { page } = fetchClassesQuerySchema.parse(request.query)
 
   try {
     const fetchClassesUseCase = makeFetchClassesUseCase()
     const { classes } = await fetchClassesUseCase.execute({
-      institutionId,
       page,
     })
 

@@ -25,7 +25,16 @@ export class InMemoryClassRepository implements ClassRepository {
     return classe
   }
 
-  async findManyClasses(
+  async findManyClasses({ page }: PaginationParams): Promise<Class[]> {
+    const perPage = 20
+    const classes = this.items
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+      .slice((page - 1) * perPage, page * perPage)
+
+    return classes
+  }
+
+  async findManyClassesWithInstitutionId(
     institutionId: string,
     { page }: PaginationParams
   ): Promise<Class[]> {

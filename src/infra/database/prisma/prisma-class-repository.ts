@@ -18,6 +18,13 @@ export class PrismaClassRepository implements ClassRepository {
       where: {
         name,
       },
+      include: {
+        institution: {
+          select: {
+            name: true,
+          },
+        },
+      },
     })
 
     if (!classe) return null
@@ -29,6 +36,13 @@ export class PrismaClassRepository implements ClassRepository {
     const classe = await prisma.classes.findUnique({
       where: {
         id,
+      },
+      include: {
+        institution: {
+          select: {
+            name: true,
+          },
+        },
       },
     })
 
@@ -49,6 +63,13 @@ export class PrismaClassRepository implements ClassRepository {
       },
       skip: (page - 1) * perPage,
       take: perPage,
+      include: {
+        institution: {
+          select: {
+            name: true,
+          },
+        },
+      },
     })
 
     return classes.map(PrismaClassMapper.toDomain)

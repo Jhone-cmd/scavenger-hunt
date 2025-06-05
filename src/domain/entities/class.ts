@@ -6,6 +6,7 @@ export interface ClassProps {
   name: string
   teacher: string
   institutionId: UniqueEntityId
+  institutionName?: string | null
   createdAt: Date
   updatedAt?: Date
 }
@@ -26,6 +27,10 @@ export class Class extends Entity<ClassProps> {
 
   get institutionId() {
     return this.props.institutionId
+  }
+
+  get institutionName() {
+    return this.props.institutionName
   }
 
   get createdAt() {

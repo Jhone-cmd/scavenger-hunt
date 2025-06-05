@@ -2,13 +2,20 @@ import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Class } from '@/domain/entities/class'
 import { Prisma, Classes as PrismaClass } from '@prisma/client'
 
+export interface PrismaClassCompleted extends PrismaClass {
+  institution: {
+    name: string
+  }
+}
+
 export class PrismaClassMapper {
-  static toDomain(raw: PrismaClass): Class {
+  static toDomain(raw: PrismaClassCompleted): Class {
     return Class.create(
       {
         name: raw.name,
         teacher: raw.teacher,
         institutionId: new UniqueEntityId(raw.institutionId),
+        institutionName: raw.institution.name,
         createdAt: raw.createdAt,
         updatedAt: raw.updatedAt,
       },

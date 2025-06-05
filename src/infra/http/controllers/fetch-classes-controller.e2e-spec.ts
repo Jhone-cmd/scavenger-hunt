@@ -29,15 +29,9 @@ describe('Fetch Classe (e2e)', () => {
     expect(result.statusCode).toEqual(200)
     expect(result.body).toEqual({
       classes: expect.arrayContaining([
-        expect.objectContaining({
-          props: expect.objectContaining({ name: 'classe-1' }),
-        }),
-        expect.objectContaining({
-          props: expect.objectContaining({ name: 'classe-2' }),
-        }),
-        expect.objectContaining({
-          props: expect.objectContaining({ name: 'classe-3' }),
-        }),
+        expect.objectContaining({ name: 'classe-1' }),
+        expect.objectContaining({ name: 'classe-2' }),
+        expect.objectContaining({ name: 'classe-3' }),
       ]),
     })
   })

@@ -25,15 +25,9 @@ describe('Fetch Item (e2e)', () => {
     expect(result.statusCode).toEqual(200)
     expect(result.body).toEqual({
       items: expect.arrayContaining([
-        expect.objectContaining({
-          props: expect.objectContaining({ name: 'item-1' }),
-        }),
-        expect.objectContaining({
-          props: expect.objectContaining({ name: 'item-2' }),
-        }),
-        expect.objectContaining({
-          props: expect.objectContaining({ name: 'item-3' }),
-        }),
+        expect.objectContaining({ name: 'item-1' }),
+        expect.objectContaining({ name: 'item-2' }),
+        expect.objectContaining({ name: 'item-3' }),
       ]),
     })
   })

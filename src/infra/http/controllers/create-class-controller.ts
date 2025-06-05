@@ -20,13 +20,13 @@ export async function createClassController(
 
   try {
     const createClassUseCase = makeCreateClassUseCase()
-    const { classe } = await createClassUseCase.execute({
+    await createClassUseCase.execute({
       name,
       teacher,
       institutionId,
     })
 
-    return reply.status(201).send({ classe })
+    return reply.status(201).send()
   } catch (error) {
     if (error instanceof ResourceAlreadyExists) {
       return reply.status(400).send({ error: error.message })

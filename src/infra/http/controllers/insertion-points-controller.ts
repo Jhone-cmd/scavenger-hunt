@@ -21,13 +21,13 @@ export async function insertionPointsController(
 
   try {
     const insertionPointsUseCase = makeInsertionPointUseCase()
-    const { point } = await insertionPointsUseCase.execute({
+    await insertionPointsUseCase.execute({
       classId,
       itemId,
       amount,
     })
 
-    return reply.status(201).send({ point })
+    return reply.status(201).send()
   } catch (error) {
     if (error instanceof ResourceNotFound) {
       return reply.status(400).send({ error: error.message })

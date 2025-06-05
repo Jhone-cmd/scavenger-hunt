@@ -17,20 +17,20 @@ describe('Fetch Institution (e2e)', () => {
         {
           name: 'institution-1',
           responsible: 'responsible-1',
-          address: 'address',
-          phone: 'phone',
+          address: 'address-1',
+          phone: 'phone-1',
         },
         {
           name: 'institution-2',
           responsible: 'responsible-2',
-          address: 'address',
-          phone: 'phone',
+          address: 'address-2',
+          phone: 'phone-2',
         },
         {
           name: 'institution-3',
           responsible: 'responsible-3',
-          address: 'address',
-          phone: 'phone',
+          address: 'address-3',
+          phone: 'phone-3',
         },
       ],
     })
@@ -40,15 +40,9 @@ describe('Fetch Institution (e2e)', () => {
     expect(result.statusCode).toEqual(200)
     expect(result.body).toEqual({
       institutions: expect.arrayContaining([
-        expect.objectContaining({
-          props: expect.objectContaining({ name: 'institution-1' }),
-        }),
-        expect.objectContaining({
-          props: expect.objectContaining({ name: 'institution-2' }),
-        }),
-        expect.objectContaining({
-          props: expect.objectContaining({ name: 'institution-3' }),
-        }),
+        expect.objectContaining({ name: 'institution-1' }),
+        expect.objectContaining({ name: 'institution-2' }),
+        expect.objectContaining({ name: 'institution-3' }),
       ]),
     })
   })

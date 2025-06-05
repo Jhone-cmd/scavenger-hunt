@@ -17,7 +17,12 @@ export async function registerAccountController(
 
   try {
     const registerAccountUseCase = makeRegisterAccountUseCase()
-    await registerAccountUseCase.execute({ name, email, password })
+    await registerAccountUseCase.execute({
+      name,
+      email,
+      password,
+    })
+
     return reply.status(201).send()
   } catch (error) {
     if (error instanceof AccountAlreadyExists) {

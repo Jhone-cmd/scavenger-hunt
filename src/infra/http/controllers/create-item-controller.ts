@@ -16,12 +16,12 @@ export async function createItemController(
 
   try {
     const createItemUseCase = makeCreateItemUseCase()
-    const { item } = await createItemUseCase.execute({
+    await createItemUseCase.execute({
       name,
       points,
     })
 
-    return reply.status(201).send({ item })
+    return reply.status(201).send()
   } catch (error) {
     if (error instanceof ResourceAlreadyExists) {
       return reply.status(400).send({ error: error.message })

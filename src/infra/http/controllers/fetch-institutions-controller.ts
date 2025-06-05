@@ -2,6 +2,7 @@ import { ResourceNotFound } from '@/core/error/resource-not-found'
 import { makeFetchInstitutionsUseCase } from '@/infra/factories/make-fetch-institutions-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
+import { InstitutionPresenter } from '../presenters/institution-presenter'
 
 export async function fetchInstitutionsController(
   request: FastifyRequest,
@@ -17,7 +18,9 @@ export async function fetchInstitutionsController(
     const fetchInstitutionsUseCase = makeFetchInstitutionsUseCase()
     const { institutions } = await fetchInstitutionsUseCase.execute({ page })
 
-    return reply.status(200).send({ institutions })
+    return reply
+      .status(200)
+      .send({ institutions: institutions.map(InstitutionPresenter.toHttp) })
   } catch (error) {
     if (error instanceof ResourceNotFound) {
       return reply.status(400).send({ error: error.message })

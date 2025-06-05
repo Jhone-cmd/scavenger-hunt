@@ -19,14 +19,14 @@ export async function createInstitutionController(
 
   try {
     const institutionUseCase = makeInstitutionUseCase()
-    const { institution } = await institutionUseCase.execute({
+    await institutionUseCase.execute({
       name,
       responsible,
       address,
       phone,
     })
 
-    return reply.status(201).send({ institution })
+    return reply.status(201).send()
   } catch (error) {
     if (error instanceof ResourceAlreadyExists) {
       return reply.status(400).send({ error: error.message })

@@ -26,10 +26,5 @@ describe('Insertion Points (e2e)', () => {
       })
 
     expect(result.statusCode).toEqual(201)
-    expect(result.body).toEqual({
-      point: expect.objectContaining({
-        props: expect.objectContaining({ total: 750 }),
-      }),
-    })
   })
 })

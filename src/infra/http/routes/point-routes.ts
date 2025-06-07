@@ -32,6 +32,7 @@ export async function pointRoutes(app: FastifyInstance) {
       onRequest: [verifyJWT],
       schema: {
         tags: ['Points'],
+        security: [{ authorization: [] }],
         querystring: z.object({
           page: z.coerce.number().default(1),
         }),

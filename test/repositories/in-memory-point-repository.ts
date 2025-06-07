@@ -12,6 +12,14 @@ export class InMemoryPointRepository implements PointRepository {
     this.items.push(point)
   }
 
+  async findById(id: string): Promise<Point | null> {
+    const point = this.items.find(item => item.id.toString() === id)
+
+    if (!point) return null
+
+    return point
+  }
+
   async classification(): Promise<
     { classeName: string; totalPoints: number }[]
   > {
@@ -49,5 +57,10 @@ export class InMemoryPointRepository implements PointRepository {
       .slice((page - 1) * perPage, page * perPage)
 
     return points
+  }
+
+  async delete(point: Point): Promise<void> {
+    const pointIndex = this.items.findIndex(item => item.id === point.id)
+    this.items.splice(pointIndex, 1)
   }
 }

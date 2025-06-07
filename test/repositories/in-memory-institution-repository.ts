@@ -9,6 +9,14 @@ export class InMemoryInstitutionRepository implements InstitutionRepository {
     this.items.push(institution)
   }
 
+  async findById(id: string): Promise<Institution | null> {
+    const institution = this.items.find(item => item.id.toString() === id)
+
+    if (!institution) return null
+
+    return institution
+  }
+
   async findByName(name: string): Promise<Institution | null> {
     const institution = this.items.find(item => item.name === name)
 
@@ -26,5 +34,12 @@ export class InMemoryInstitutionRepository implements InstitutionRepository {
       .slice((page - 1) * perPage, page * perPage)
 
     return institutions
+  }
+
+  async delete(institution: Institution): Promise<void> {
+    const institutionIndex = this.items.findIndex(
+      item => item.id === institution.id
+    )
+    this.items.splice(institutionIndex, 1)
   }
 }

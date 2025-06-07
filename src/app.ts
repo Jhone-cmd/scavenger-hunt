@@ -34,7 +34,7 @@ app.register(fastifySwagger, {
     info: {
       title: 'API do Scavenger-Hunt',
       description:
-        'Documentação da api scavenger-hunt utilizando o framework fastify, ela serve para auxiliar as gincanas de festas juninas das instituições escolares.',
+        'Esta documentação detalha a API Scavenger Hunt, desenvolvida com o framework Fastify para auxiliar na organização e gestão de gincanas de festas juninas em instituições escolares.',
       version: '1.0.0',
     },
     components: {

@@ -22,6 +22,11 @@ export class Point extends Entity<PointProps> {
     return this.props.itemId
   }
 
+  set itemId(itemId: UniqueEntityId) {
+    this.props.itemId = itemId
+    this.touch()
+  }
+
   get classeName() {
     return this.props.classeName
   }

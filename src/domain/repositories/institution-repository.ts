@@ -8,5 +8,6 @@ export abstract class InstitutionRepository {
   abstract findManyInstitutions(
     params: PaginationParams
   ): Promise<Institution[]>
+  abstract save(institution: Institution): Promise<void>
   abstract delete(institution: Institution): Promise<void>
 }

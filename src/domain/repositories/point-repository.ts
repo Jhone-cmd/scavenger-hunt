@@ -8,5 +8,6 @@ export abstract class PointRepository {
     { classeName: string; totalPoints: number }[]
   >
   abstract findManyPoints(params: PaginationParams): Promise<Point[]>
+  abstract save(point: Point): Promise<void>
   abstract delete(point: Point): Promise<void>
 }

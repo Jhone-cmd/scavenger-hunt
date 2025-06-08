@@ -47,6 +47,11 @@ export class InMemoryClassRepository implements ClassRepository {
     return classes
   }
 
+  async save(classe: Class): Promise<void> {
+    const classIndex = this.items.findIndex(item => item.id === classe.id)
+    this.items[classIndex] = classe
+  }
+
   async delete(classe: Class): Promise<void> {
     const classIndex = this.items.findIndex(item => item.id === classe.id)
     this.items.splice(classIndex, 1)

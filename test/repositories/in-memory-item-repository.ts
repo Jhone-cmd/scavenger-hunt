@@ -34,6 +34,11 @@ export class InMemoryItemRepository implements ItemRepository {
     return items
   }
 
+  async save(item: Item): Promise<void> {
+    const itemIndex = this.items.findIndex(element => element.id === item.id)
+    this.items[itemIndex] = item
+  }
+
   async delete(item: Item): Promise<void> {
     const itemIndex = this.items.findIndex(element => element.id === item.id)
     this.items.splice(itemIndex, 1)

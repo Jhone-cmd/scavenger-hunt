@@ -10,5 +10,6 @@ export abstract class ClassRepository {
     institutionId: string,
     params: PaginationParams
   ): Promise<Class[]>
+  abstract save(classe: Class): Promise<void>
   abstract delete(classe: Class): Promise<void>
 }

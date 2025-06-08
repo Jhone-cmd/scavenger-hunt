@@ -59,6 +59,11 @@ export class InMemoryPointRepository implements PointRepository {
     return points
   }
 
+  async save(point: Point): Promise<void> {
+    const pointIndex = this.items.findIndex(item => item.id === point.id)
+    this.items[pointIndex] = point
+  }
+
   async delete(point: Point): Promise<void> {
     const pointIndex = this.items.findIndex(item => item.id === point.id)
     this.items.splice(pointIndex, 1)

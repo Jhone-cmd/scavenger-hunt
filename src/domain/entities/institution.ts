@@ -34,6 +34,11 @@ export class Institution extends Entity<InstitutionProps> {
     return this.props.address
   }
 
+  set address(address: string) {
+    this.props.address = address
+    this.touch()
+  }
+
   get phone() {
     return this.props.phone
   }

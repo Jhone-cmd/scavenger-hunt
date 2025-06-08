@@ -16,6 +16,11 @@ export class Class extends Entity<ClassProps> {
     return this.props.name
   }
 
+  set name(name: string) {
+    this.props.name = name
+    this.touch()
+  }
+
   get teacher() {
     return this.props.teacher
   }

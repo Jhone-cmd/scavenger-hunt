@@ -36,6 +36,13 @@ export class InMemoryInstitutionRepository implements InstitutionRepository {
     return institutions
   }
 
+  async save(institution: Institution): Promise<void> {
+    const institutionIndex = this.items.findIndex(
+      item => item.id === institution.id
+    )
+    this.items[institutionIndex] = institution
+  }
+
   async delete(institution: Institution): Promise<void> {
     const institutionIndex = this.items.findIndex(
       item => item.id === institution.id

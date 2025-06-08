@@ -14,6 +14,11 @@ export class Item extends Entity<ItemProps> {
     return this.props.name
   }
 
+  set name(name: string) {
+    this.props.name = name
+    this.touch()
+  }
+
   get points() {
     return this.props.points
   }

@@ -45,4 +45,23 @@ export class PrismaItemRepository implements ItemRepository {
 
     return items.map(PrismaItemMapper.toDomain)
   }
+
+  async save(item: Item): Promise<void> {
+    const data = PrismaItemMapper.toPrisma(item)
+    await prisma.items.update({
+      where: {
+        id: data.id,
+      },
+      data,
+    })
+  }
+
+  async delete(item: Item): Promise<void> {
+    const data = PrismaItemMapper.toPrisma(item)
+    await prisma.classes.delete({
+      where: {
+        id: data.id,
+      },
+    })
+  }
 }

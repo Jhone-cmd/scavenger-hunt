@@ -12,6 +12,22 @@ export class PrismaPointRepository implements PointRepository {
     })
   }
 
+  async findById(id: string): Promise<Point | null> {
+    const point = await prisma.points.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        classe: true,
+        item: true,
+      },
+    })
+
+    if (!point) return null
+
+    return PrismaPointMapper.toDomain(point)
+  }
+
   async classification(): Promise<
     { classeName: string; totalPoints: number }[]
   > {
@@ -74,5 +90,24 @@ export class PrismaPointRepository implements PointRepository {
     })
 
     return points.map(PrismaPointMapper.toDomain)
+  }
+
+  async save(point: Point): Promise<void> {
+    const data = PrismaPointMapper.toPrisma(point)
+    await prisma.points.update({
+      where: {
+        id: data.id,
+      },
+      data,
+    })
+  }
+
+  async delete(point: Point): Promise<void> {
+    const data = PrismaPointMapper.toPrisma(point)
+    await prisma.points.delete({
+      where: {
+        id: data.id,
+      },
+    })
   }
 }

@@ -10,6 +10,18 @@ export class PrismaInstitutionRepository implements InstitutionRepository {
     await prisma.institutions.create({ data })
   }
 
+  async findById(id: string): Promise<Institution | null> {
+    const institution = await prisma.institutions.findUnique({
+      where: {
+        id,
+      },
+    })
+
+    if (!institution) return null
+
+    return PrismaInstitutionMapper.toDomain(institution)
+  }
+
   async findByName(name: string): Promise<Institution | null> {
     const institution = await prisma.institutions.findUnique({
       where: {
@@ -32,5 +44,24 @@ export class PrismaInstitutionRepository implements InstitutionRepository {
     })
 
     return institutions.map(PrismaInstitutionMapper.toDomain)
+  }
+
+  async save(institution: Institution): Promise<void> {
+    const data = PrismaInstitutionMapper.toPrisma(institution)
+    await prisma.institutions.update({
+      where: {
+        id: data.id,
+      },
+      data,
+    })
+  }
+
+  async delete(institution: Institution): Promise<void> {
+    const data = PrismaInstitutionMapper.toPrisma(institution)
+    await prisma.institutions.delete({
+      where: {
+        id: data.id,
+      },
+    })
   }
 }

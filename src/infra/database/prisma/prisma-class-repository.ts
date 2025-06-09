@@ -90,4 +90,23 @@ export class PrismaClassRepository implements ClassRepository {
 
     return classes.map(PrismaClassMapper.toDomain)
   }
+
+  async save(classe: Class): Promise<void> {
+    const data = PrismaClassMapper.toPrisma(classe)
+    await prisma.classes.update({
+      where: {
+        id: data.id,
+      },
+      data,
+    })
+  }
+
+  async delete(classe: Class): Promise<void> {
+    const data = PrismaClassMapper.toPrisma(classe)
+    await prisma.classes.delete({
+      where: {
+        id: data.id,
+      },
+    })
+  }
 }

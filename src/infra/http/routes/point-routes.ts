@@ -3,6 +3,7 @@ import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
 import { classificationController } from '../controllers/classification-controller'
 import { deletePointController } from '../controllers/delete-point-controller'
+import { editPointController } from '../controllers/edit-point-controller'
 import { fetchPointsController } from '../controllers/fetch-points-controller'
 import { verifyJWT } from '../middlewares/verify-jwt'
 
@@ -53,6 +54,28 @@ export async function pointRoutes(app: FastifyInstance) {
       },
     },
     fetchPointsController
+  )
+
+  app.withTypeProvider<ZodTypeProvider>().put(
+    '/points/:pointId',
+    {
+      onRequest: [verifyJWT],
+      schema: {
+        tags: ['Points'],
+        security: [{ authorization: [] }],
+        params: z.object({
+          pointId: z.string().uuid(),
+        }),
+        body: z.object({
+          itemId: z.string().uuid().optional(),
+          amount: z.coerce.number().optional(),
+        }),
+        response: {
+          204: z.null(),
+        },
+      },
+    },
+    editPointController
   )
 
   app.withTypeProvider<ZodTypeProvider>().delete(

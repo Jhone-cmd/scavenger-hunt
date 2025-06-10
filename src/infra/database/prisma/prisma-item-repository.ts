@@ -58,7 +58,7 @@ export class PrismaItemRepository implements ItemRepository {
 
   async delete(item: Item): Promise<void> {
     const data = PrismaItemMapper.toPrisma(item)
-    await prisma.classes.delete({
+    await prisma.items.delete({
       where: {
         id: data.id,
       },

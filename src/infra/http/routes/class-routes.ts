@@ -2,6 +2,7 @@ import { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
 import { deleteClassController } from '../controllers/delete-class-controller'
+import { editClassController } from '../controllers/edit-class-controller'
 import { fetchClassesController } from '../controllers/fetch-classes-controller'
 import { insertionPointsController } from '../controllers/insertion-points-controller'
 import { verifyJWT } from '../middlewares/verify-jwt'
@@ -52,6 +53,28 @@ export async function classRoutes(app: FastifyInstance) {
       },
     },
     fetchClassesController
+  )
+
+  app.withTypeProvider<ZodTypeProvider>().put(
+    '/classes/:classId',
+    {
+      onRequest: [verifyJWT],
+      schema: {
+        tags: ['Classes'],
+        security: [{ authorization: [] }],
+        params: z.object({
+          classId: z.string().uuid(),
+        }),
+        body: z.object({
+          name: z.string().optional(),
+          teacher: z.string().optional(),
+        }),
+        response: {
+          204: z.null(),
+        },
+      },
+    },
+    editClassController
   )
 
   app.withTypeProvider<ZodTypeProvider>().delete(

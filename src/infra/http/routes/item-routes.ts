@@ -3,6 +3,7 @@ import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
 import { createItemController } from '../controllers/create-item-controller'
 import { deleteItemController } from '../controllers/delete-item-controller'
+import { editItemController } from '../controllers/edit-item-controller'
 import { fetchItemsController } from '../controllers/fetch-items-controller'
 import { verifyJWT } from '../middlewares/verify-jwt'
 
@@ -47,6 +48,28 @@ export async function itemRoutes(app: FastifyInstance) {
       },
     },
     fetchItemsController
+  )
+
+  app.withTypeProvider<ZodTypeProvider>().put(
+    '/items/:itemId',
+    {
+      onRequest: [verifyJWT],
+      schema: {
+        tags: ['Items'],
+        security: [{ authorization: [] }],
+        params: z.object({
+          itemId: z.string().uuid(),
+        }),
+        body: z.object({
+          name: z.string().optional(),
+          points: z.coerce.number().optional(),
+        }),
+        response: {
+          204: z.null(),
+        },
+      },
+    },
+    editItemController
   )
 
   app.withTypeProvider<ZodTypeProvider>().delete(

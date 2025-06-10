@@ -3,7 +3,7 @@ import { prisma } from '@/infra/lib/prisma'
 import request from 'supertest'
 import { createAccountAndAuthenticate } from '../../../../test/utils/create-account-and-authenticate'
 
-describe('Edit Institution (e2e)', () => {
+describe('Edit Item (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
   })
@@ -12,24 +12,22 @@ describe('Edit Institution (e2e)', () => {
     await app.close()
   })
 
-  test('[PUT] should be able to edit institution', async () => {
+  test('[PUT] should be able to edit item', async () => {
     const { token } = await createAccountAndAuthenticate(app)
-    const institution = await prisma.institutions.create({
+    const item = await prisma.items.create({
       data: {
-        name: 'institution-1',
-        responsible: 'fulano',
-        address: 'alone',
-        phone: '55 66 7777-2222',
+        name: 'item',
+        points: 10,
       },
     })
 
-    const institutionId = institution.id
+    const itemId = item.id
 
     const result = await request(app.server)
-      .delete(`/institutions/${institutionId}`)
+      .delete(`/items/${itemId}`)
       .set('Authorization', `Bearer ${token}`)
       .send({
-        phone: '55 68 9999-8888',
+        points: 150,
       })
 
     expect(result.statusCode).toEqual(204)

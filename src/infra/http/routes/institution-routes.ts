@@ -4,6 +4,7 @@ import z from 'zod'
 import { createClassController } from '../controllers/create-class-controller'
 import { createInstitutionController } from '../controllers/create-institution-controller'
 import { deleteInstitutionController } from '../controllers/delete-institution-controller'
+import { editInstitutionController } from '../controllers/edit-institution-controller'
 import { fetchInstitutionsController } from '../controllers/fetch-institutions-controller'
 import { fetchSpecificClassesController } from '../controllers/fetch-specific-classes-controller'
 import { verifyJWT } from '../middlewares/verify-jwt'
@@ -103,6 +104,30 @@ export async function institutionRoutes(app: FastifyInstance) {
       },
     },
     fetchSpecificClassesController
+  )
+
+  app.withTypeProvider<ZodTypeProvider>().put(
+    '/institutions/:institutionId',
+    {
+      onRequest: [verifyJWT],
+      schema: {
+        tags: ['Institutions'],
+        security: [{ authorization: [] }],
+        params: z.object({
+          institutionId: z.string().uuid(),
+        }),
+        body: z.object({
+          name: z.string().optional(),
+          responsible: z.string().optional(),
+          address: z.string().optional(),
+          phone: z.string().optional(),
+        }),
+        response: {
+          204: z.null(),
+        },
+      },
+    },
+    editInstitutionController
   )
 
   app.withTypeProvider<ZodTypeProvider>().delete(

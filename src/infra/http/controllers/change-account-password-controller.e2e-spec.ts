@@ -4,7 +4,7 @@ import { hash } from 'bcryptjs'
 import request from 'supertest'
 import { createAccountAndAuthenticate } from '../../../../test/utils/create-account-and-authenticate'
 
-describe('Edit Account (e2e)', () => {
+describe('Change Account Password (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
   })
@@ -13,7 +13,7 @@ describe('Edit Account (e2e)', () => {
     await app.close()
   })
 
-  test('[PUT] should be able to edit account', async () => {
+  test('[PATCH] should be able to change account password', async () => {
     const { token } = await createAccountAndAuthenticate(app)
     const account = await prisma.accounts.create({
       data: {
@@ -26,10 +26,10 @@ describe('Edit Account (e2e)', () => {
     const accountId = account.id
 
     const result = await request(app.server)
-      .put(`/accounts/${accountId}`)
+      .patch(`/accounts/${accountId}/change-password`)
       .set('Authorization', `Bearer ${token}`)
       .send({
-        name: 'fulano tal',
+        password: 'new password',
       })
 
     expect(result.statusCode).toEqual(204)

@@ -2,6 +2,7 @@ import { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
 import { authenticateController } from '../controllers/authenticate-controller'
+import { changeAccountPasswordController } from '../controllers/change-account-password-controller'
 import { deleteAccountController } from '../controllers/delete-account-controller'
 import { editAccountController } from '../controllers/edit-account-controller'
 import { registerAccountController } from '../controllers/register-account-controller'
@@ -64,6 +65,27 @@ export async function accountRoutes(app: FastifyInstance) {
       },
     },
     editAccountController
+  )
+
+  app.withTypeProvider<ZodTypeProvider>().patch(
+    '/accounts/:accountId/change-password',
+    {
+      onRequest: [verifyJWT],
+      schema: {
+        tags: ['Accounts'],
+        security: [{ authorization: [] }],
+        params: z.object({
+          accountId: z.string().uuid(),
+        }),
+        body: z.object({
+          password: z.string().min(8),
+        }),
+        response: {
+          204: z.null(),
+        },
+      },
+    },
+    changeAccountPasswordController
   )
 
   app.withTypeProvider<ZodTypeProvider>().delete(

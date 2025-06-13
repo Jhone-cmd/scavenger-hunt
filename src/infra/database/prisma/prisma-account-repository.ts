@@ -11,6 +11,18 @@ export class PrismaAccountRepository implements AccountRepository {
     })
   }
 
+  async findById(id: string): Promise<Account | null> {
+    const account = await prisma.accounts.findUnique({
+      where: {
+        id,
+      },
+    })
+
+    if (!account) return null
+
+    return PrismaAccountMapper.toDomain(account)
+  }
+
   async findByEmail(email: string): Promise<Account | null> {
     const account = await prisma.accounts.findUnique({
       where: {
@@ -21,5 +33,24 @@ export class PrismaAccountRepository implements AccountRepository {
     if (!account) return null
 
     return PrismaAccountMapper.toDomain(account)
+  }
+
+  async save(account: Account): Promise<void> {
+    const data = PrismaAccountMapper.toPrisma(account)
+    await prisma.accounts.update({
+      where: {
+        id: data.id,
+      },
+      data,
+    })
+  }
+
+  async delete(account: Account): Promise<void> {
+    const data = PrismaAccountMapper.toPrisma(account)
+    await prisma.accounts.delete({
+      where: {
+        id: data.id,
+      },
+    })
   }
 }

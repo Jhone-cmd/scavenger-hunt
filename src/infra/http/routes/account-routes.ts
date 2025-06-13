@@ -2,7 +2,9 @@ import { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
 import { authenticateController } from '../controllers/authenticate-controller'
+import { deleteAccountController } from '../controllers/delete-account-controller'
 import { registerAccountController } from '../controllers/register-account-controller'
+import { verifyJWT } from '../middlewares/verify-jwt'
 
 export async function accountRoutes(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -39,5 +41,23 @@ export async function accountRoutes(app: FastifyInstance) {
       },
     },
     authenticateController
+  )
+
+  app.withTypeProvider<ZodTypeProvider>().delete(
+    '/accounts/:accountId',
+    {
+      onRequest: [verifyJWT],
+      schema: {
+        tags: ['Accounts'],
+        security: [{ authorization: [] }],
+        params: z.object({
+          accountId: z.string().uuid(),
+        }),
+        response: {
+          204: z.null(),
+        },
+      },
+    },
+    deleteAccountController
   )
 }
